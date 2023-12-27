@@ -332,6 +332,16 @@ saveButton.addEventListener('click', function() {
             }
         });
 
+            if (window.self !== window.top) {
+    // A página está incorporada em um iframe
+    // Esconda o menu lateral ou qualquer outro elemento que deseja ocultar
+    const menuElement = document.querySelector('.main-menu');
+    if (menuElement) {
+        menuElement.style.display = 'none';
+    }
+}
+
+
         </script>
 </body>
 </html>
