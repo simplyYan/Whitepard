@@ -335,6 +335,7 @@ saveButton.addEventListener('click', function() {
         codeInput.addEventListener('input', function() {
             letscode.textContent = this.value;
             Prism.highlightElement(letscode);
+            moveCursorToEnd();
         });
         </script>
 </body>
