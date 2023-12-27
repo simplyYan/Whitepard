@@ -363,6 +363,15 @@ saveButton.addEventListener('click', function() {
 
         // Adiciona um evento para verificar mudanças no hash da URL
         window.addEventListener('hashchange', extractCodeFromHash);
+            
+if (window.self !== window.top) {
+    // A página está incorporada em um iframe
+    // Esconda o menu lateral ou qualquer outro elemento que deseja ocultar
+    const menuElement = document.querySelector('.main-menu');
+    if (menuElement) {
+        menuElement.style.display = 'none';
+    }
+}
 
         </script>
 </body>
