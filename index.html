@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whitepard By @simplyYan / Blackpard Lang IDE</title>
+    <link rel="stylesheet" href="prism.css">
+    <style>
+@import url(//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css);
+
+@import url(https://fonts.googleapis.com/css?family=Titillium+Web:300);
+.fa-2x {
+font-size: 2em;
+}
+.fa {
+position: relative;
+display: table-cell;
+width: 60px;
+height: 36px;
+text-align: center;
+vertical-align: middle;
+font-size:20px;
+}
+
+
+.main-menu:hover,nav.main-menu.expanded {
+width:250px;
+overflow:visible;
+}
+
+.main-menu {
+background:#212121;
+border-right:10px solid #e5e5e5;
+position:absolute;
+top:0;
+bottom:0;
+height:100%;
+left:0;
+width:60px;
+overflow:hidden;
+-webkit-transition:width .05s linear;
+transition:width .05s linear;
+-webkit-transform:translateZ(0) scale(1,1);
+z-index:1000;
+}
+
+.main-menu>ul {
+margin:7px 0;
+}
+
+.main-menu li {
+position:relative;
+display:block;
+width:250px;
+}
+
+.main-menu li>a {
+position:relative;
+display:table;
+border-collapse:collapse;
+border-spacing:0;
+color:#999;
+ font-family: arial;
+font-size: 14px;
+text-decoration:none;
+-webkit-transform:translateZ(0) scale(1,1);
+-webkit-transition:all .1s linear;
+transition:all .1s linear;
+  
+}
+
+.main-menu .nav-icon {
+position:relative;
+display:table-cell;
+width:60px;
+height:36px;
+text-align:center;
+vertical-align:middle;
+font-size:18px;
+}
+
+.main-menu .nav-text {
+position:relative;
+display:table-cell;
+vertical-align:middle;
+width:190px;
+  font-family: 'Titillium Web', sans-serif;
+}
+
+.main-menu>ul.logout {
+position:absolute;
+left:0;
+bottom:0;
+}
+
+.no-touch .scrollable.hover {
+overflow-y:hidden;
+}
+
+.no-touch .scrollable.hover:hover {
+overflow-y:auto;
+overflow:visible;
+}
+
+a:hover,a:focus {
+text-decoration:none;
+}
+
+nav {
+-webkit-user-select:none;
+-moz-user-select:none;
+-ms-user-select:none;
+-o-user-select:none;
+user-select:none;
+}
+
+nav ul,nav li {
+outline:0;
+margin:0;
+padding:0;
+}
+.main-menu li:hover>a,nav.main-menu li.active>a,.dropdown-menu>li>a:hover,.dropdown-menu>li>a:focus,.dropdown-menu>.active>a,.dropdown-menu>.active>a:hover,.dropdown-menu>.active>a:focus,.no-touch .dashboard-page nav.dashboard-menu ul li:hover a,.dashboard-page nav.dashboard-menu ul li.active a {
+color:#fff;
+background-color:#000000;
+}
+.area {
+float: left;
+background: #e2e2e2;
+width: 0.5px;
+height: 1%;
+}
+@font-face {
+  font-family: 'Titillium Web';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Titillium WebLight'), local('TitilliumWeb-Light'), url(http://themes.googleusercontent.com/static/fonts/titilliumweb/v2/anMUvcNT0H1YN4FII8wpr24bNCNEoFTpS2BTjF6FB5E.woff) format('woff');
+}
+    </style>
+    <style>
+        body {
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .code-container {
+            position: relative;
+            max-width: 600px;
+        }
+
+        .codei {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            z-index: 1;
+            caret-color: white; /* Define a cor do cursor */
+            color: transparent; /* Texto transparente */
+        }
+
+        .language-python {
+            position: relative;
+            z-index: 0;
+            background-color: black;
+            color: white; /* Define a cor do texto */
+        }
+
+        /* Cursor personalizado */
+        .cursor {
+            position: absolute;
+            height: 35px;
+            background-color: white; /* Cor do cursor */
+            width: 1px; /* Largura do cursor */
+            animation: blink 1s step-end infinite; /* Animação do cursor piscante */
+        }
+
+        /* Animação do cursor piscante */
+        @keyframes blink {
+            50% {
+                opacity: 0; /* Torna o cursor invisível na metade da animação */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="area"></div><nav class="main-menu">
+        <ul>
+            <li>
+                <a href="#" id="saveButton">
+                    <i class="fa fa-home fa-2x" ></i>
+                    <span class="nav-text">
+                       Save file
+                    </span>
+                </a>
+              
+            </li>
+            <li class="has-subnav">
+                <a href="https://linktr.ee/yan.dev">
+                   <i class="fa fa-comments fa-2x"></i>
+                    <span class="nav-text">
+                        Follow @simplyYan
+                    </span>
+                </a>
+                
+            </li>
+            <li class="has-subnav">
+                <a href="https://github.com/simplyYan/Blackpard">
+                   <i class="fa fa-camera-retro fa-2x"></i>
+                    <span class="nav-text">
+                        Star Blackpard
+                    </span>
+                </a>
+               
+            </li>
+            <li>
+                <a href="https://github.com/simplyYan/Blackpard/blob/main/DONATE.MD">
+                    <i class="fa fa-film fa-2x"></i>
+                    <span class="nav-text">
+                        Donate (ETH)
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="https://github.com/simplyYan/Blackpard/wiki">
+                    <i class="fa fa-book fa-2x"></i>
+                    <span class="nav-text">
+                       Blackpard Docs
+                    </span>
+                </a>
+            </li>
+
+        </ul>
+
+        <ul class="logout">
+            <li>
+               <a href="#">
+                     <i class="fa fa-power-off fa-2x"></i>
+                    <span class="nav-text">
+                        <input type="file" id="loadButton"/>
+                    </span>
+                </a>
+            </li>  
+        </ul>
+    </nav>
+    <div class="code-container">
+        <textarea name="" class="codei" id="code" cols="30" rows="10"></textarea>
+        <pre><code id="codearea" class="language-python"></code></pre>
+    </div>
+    <div class="cursor" id="cursor"></div> <!-- Cursor personalizado -->
+    <script src="prism.js"></script>
+    <script>
+        document.getElementById("code").addEventListener("input", function() {
+            var code = this.value;
+            var codearea = document.getElementById("codearea");
+            codearea.textContent = code;
+            Prism.highlightAll();
+        });
+
+        const cursor = document.getElementById('cursor');
+        const codeInput = document.getElementById('code');
+        const codeArea = document.getElementById('codearea');
+
+        codeInput.addEventListener('input', function() {
+            codeArea.textContent = this.value; // Atualiza o conteúdo do código
+            moveCursorToEnd(); // Move o cursor para o final
+        });
+
+        codeArea.addEventListener('click', function() {
+            codeInput.focus();
+        });
+
+        function moveCursorToEnd() {
+            const code = codeInput.value;
+            const selection = window.getSelection();
+            const range = document.createRange();
+            const textNode = codeArea.firstChild;
+
+            range.setStart(textNode, code.length);
+            range.setEnd(textNode, code.length);
+
+            selection.removeAllRanges();
+            selection.addRange(range);
+        }
+
+        // Atualiza a posição do cursor personalizado
+        setInterval(() => {
+            const selection = window.getSelection();
+            if (selection.rangeCount > 0) {
+                const range = selection.getRangeAt(0).cloneRange();
+                const rect = range.getBoundingClientRect();
+                cursor.style.top = (rect.top + window.scrollY) + 'px';
+                cursor.style.left = (rect.left + window.scrollX) + 'px';
+            }
+        }, 100); 
+        
+    </script>
+        <script>
+// Obtém referências aos elementos relevantes
+const codeInputt = document.getElementById('code');
+const saveButton = document.getElementById('saveButton');
+const loadButton = document.getElementById('loadButton');
+
+// Função para salvar o conteúdo da textarea em um arquivo
+saveButton.addEventListener('click', function() {
+    const content = codeInputt.value;
+    const blob = new Blob([content], { type: 'text/plain' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'script.blpd';
+    a.click();
+});
+
+        // Função para carregar um arquivo na textarea
+        loadButton.addEventListener('click', function() {
+            document.getElementById('loadButton').value = ''; // Reseta o valor do input para permitir a seleção do mesmo arquivo
+            document.getElementById('loadButton').click(); // Abre o seletor de arquivos
+        });
+
+        document.getElementById('loadButton').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    codeInputt.value = event.target.result;
+                };
+                reader.readAsText(file);
+            }
+        });
+
+        </script>
+</body>
+</html>
