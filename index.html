@@ -304,6 +304,7 @@ height: 1%;
 const codeInputt = document.getElementById('code');
 const saveButton = document.getElementById('saveButton');
 const loadButton = document.getElementById('loadButton');
+const letscode = document.getElementById('codearea');
 
 // Função para salvar o conteúdo da textarea em um arquivo
 saveButton.addEventListener('click', function() {
@@ -331,7 +332,10 @@ saveButton.addEventListener('click', function() {
                 reader.readAsText(file);
             }
         });
-
+        codeInput.addEventListener('input', function() {
+            letscode.textContent = this.value;
+            Prism.highlightElement(letscode);
+        });
         </script>
 </body>
 </html>
