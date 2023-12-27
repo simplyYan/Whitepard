@@ -337,6 +337,32 @@ saveButton.addEventListener('click', function() {
             Prism.highlightElement(letscode);
             moveCursorToEnd();
         });
+
+                // Função para extrair o código/texto do hash da URL
+        function extractCodeFromHash() {
+            const hash = window.location.hash.substr(1); // Obtém o hash sem o símbolo '#'
+            const codeInput = document.getElementById('code');
+            
+            if (hash) {
+                codeInput.value = decodeURIComponent(hash); // Decodifica o hash (se estiver codificado)
+                updateCodeArea(); // Atualiza a área de código
+            }
+        }
+
+                // Atualiza a área de código
+        function updateCodeArea() {
+            const codeInput = document.getElementById('code');
+            const codeArea = document.getElementById('codearea');
+            codeArea.textContent = codeInput.value; // Atualiza o código com o conteúdo da textarea
+            Prism.highlightElement(codeArea); // Realiza a colorização com Prism
+        }
+
+        // Chamada inicial para verificar o hash na URL
+        extractCodeFromHash();
+
+        // Adiciona um evento para verificar mudanças no hash da URL
+        window.addEventListener('hashchange', extractCodeFromHash);
+
         </script>
 </body>
 </html>
