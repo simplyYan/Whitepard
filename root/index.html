@@ -1,30 +1,199 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta property="og:title" content="MythCoder - Free code editor">
+    <meta property="og:description" content="Free and open-source online code editor that allows you to write and execute code from a rich set of languages.">
+    <meta property="og:image" content="https://raw.githubusercontent.com/judge0/ide/master/.github/wallpaper.png">
+
+    <script src="jquery.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lexend">
+    <script src="goldenlayout.min.js"></script>
+    <link rel="stylesheet" href="goldenlayout-base.css"/>
+    <link rel="stylesheet" href="goldenlayout-dark-theme.css"/>
+
+    <script>
+        var require = {
+            paths: {
+                "vs": "./monaco-editor/min/vs",
+                "monaco-vim": "monaco-vim.js",
+                "monaco-emacs": "monaco-emacs.js"
+            }
+        };
+    </script>
+    <script src="loader.js"></script>
+    <script src="editor.main.nls.js"></script>
+    <script src="editor.main.js"></script>
+
+    <link rel="stylesheet" href="semantic.min.css"/>
+    <script src="semantic.min.js"></script>
+
+    <link href="https://fonts.googleapis.com/css?family=Exo+2" rel="stylesheet">
+
+    <script type="text/javascript" src="third_party/download.js"></script>
+
+    <script type="text/javascript" src="js/ide.js"></script>
+
+    <link type="text/css" rel="stylesheet" href="css/ide.css">
+
     <title>Whitepard</title>
-    <script src="framework/foundation.min.js"></script>
-    <link rel="stylesheet" href="framework/foundation.min.css">
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
-    <script src="filesaver.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/simplyYan/Blackpard@main/docs/blackpard_mobile/loaded/lang.js"></script>
+    <link rel="shortcut icon" href="./favicon2.ico" type="image/x-icon">
+    <link rel="icon" href="./favicon2.ico" type="image/x-icon">
+    <link href='add_box.css' rel='stylesheet'>
 </head>
+
 <body>
-    <div class="nav">
-    <ul class="menu align-center">
-        <li><a href="" onclick="saveFile()">Save File</a></li>
-        <li><a href="" onclick="runFile()">Run File</a></li>
-        <li><a href="" onclick="pardCloud()">Save to Pardcloud</a></li>
-        <li><a href="" onclick="pardcloudOpen()">Open from Pardcloud</a></li>
-    </ul>
-</div>
-<div class="ide-main">
-<textarea name="" id="codearea" cols="30" rows="30" class="codearea" wrap="hard" placeholder='echo("Hello World") //Welcome to Blackpard lang'></textarea>
-</div>
-<div class="footer">
-    <p>Whitepard developed by <a href="https://github.com/simplyYan" target="_blank">@simplyYan</a>, under BSD-3-Clause license</p>
-</div>
+    <div id="site-navigation" class="ui small inverted menu">
+        <div id="site-header" class="header item">
+            <a href="/">
+                <img id="site-icon" src="headerlogo.png">
+                <h2>&VeryThinSpace; 𝖂𝖍𝖎𝖙𝖊𝖕𝖆𝖗𝖉</h2>
+            </a>
+        </div>
+        <div class="left menu">
+            <div class="ui dropdown item site-links on-hover">
+                <i class="gg-file"></i>&nbsp; File/Options 
+                <div class="menu">
+                    <a class="item" target="_blank" href="/"><i class=""></i> New File</a>
+                    <a class="item" target="_blank" onclick="OpenFileWindow()"><i class=""></i> Open File</a>
+                    <div class="item" onclick="downloadSource()"><i class=""></i> Download File</div>
+                    <div id="insert-template-btn" class="item"><i class=""></i> Select a language or template</div>                </div>
+            </div>
+                
+
+    </script>
+
+            <div class="link item" onclick="$('#site-settings').modal('show')"><i class="gg-options"></i>&nbsp; Mode</div>
+            <div class="item borderless">
+                <select id="select-language" class="ui dropdown">
+                    <option value="2016" mode="javascript">Blackpard</option> <!-- Unknown mode. Help needed. -->
+                    <option value="2001" mode="javascript">JSON</option>
+                </select>
+            </div>
+            <div class="item fitted borderless wide screen only">
+
+            </div>
+            <div class="item borderless wide screen only">
+                <div class="ui input">
+                    <input id="command-line-arguments" type="text" placeholder="Command Palette"></input>
+
+                </div>
+            </div>
+            <div class="item no-left-padding borderless">
+                <button class="ui primary labeled icon button" onclick="copyTextFromDiv()" style="background-color: #00ff85;color: black;">Run (F9)</button>
+            </div>
+            <div id="navigation-message" class="item borderless">
+                <span class="navigation-message-text"></span>
+            </div>
+        </div>
+        <div class="right menu">
+            <div id="judge0-more" class="ui dropdown item site-links"><i class="gg-attribution"></i>
+                &nbsp; Extensions 
+                <div class="menu">
+                    <a id="about" class="link item" onclick="createExtension()">Create a Extension</a>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="site-content"></div>
+
+    <div id="site-modal" class="ui modal">
+        <div class="header">
+            <i class="close icon"></i>
+            <span id="title"></span>
+        </div>
+        <div class="scrolling content"></div>
+        <div class="actions">
+            <div class="ui small labeled icon cancel button">
+                <i class="remove icon"></i>
+                Close (ESC)
+            </div>
+        </div>
+    </div>
+
+    <div id="site-settings" class="ui modal">
+        <i class="close icon"></i>
+        <div class="header">
+            <i class="cog icon"></i>
+            Whitepard Settings
+        </div>
+        <div class="content">
+            <div class="ui form">
+                <div class="inline fields">
+                    <label>Editor Mode</label>
+                    <div class="field">
+                        <div class="ui radio checkbox">
+                            <input type="radio" name="editor-mode" value="normal" checked="checked">
+                            <label>Normal [Standard]</label>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui radio checkbox">
+                            <input type="radio" name="editor-mode" value="vim">
+                            <label>VimX [Adapted]</label>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui radio checkbox">
+                            <input type="radio" name="editor-mode" value="emacs">
+                            <label>Emacs</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="site-footer">
+        <div id="editor-status-line"></div>
+        <span>Whitepard developed by <a href="https://github.com/simplyYan">@simplyYan</a>, under BSD-3-Clause license.</a>
+        <span id="status-line"></span>
+    </div>
+    <script type="text/javascript">
+        function OpenFileWindow() {
+            window.open("./select/index.html")
+        }
+    </script>
+
+
+<script>
+    var ext = localStorage.getItem("extensions")
+    if (ext == null) {
+        //ignore
+    } else {
+        eval(ext)
+    }
+
+    function createExtension() {
+        var code = window.prompt("Enter the code, in Blackpard of your extension")
+        var result = localStorage.getItem("extensions") + "\n" + code
+        localStorage.setItem("extensions", result)
+        alert("Extension created")
+    }
+
+    function copyTextFromDiv() {
+    // Encontra a div com a classe especificada
+    const div = document.querySelector('.view-lines.monaco-mouse-cursor-text');
+
+    // Verifica se a div existe
+    if (div) {
+        // Obtém o texto dentro da div
+        const text = div.innerText;
+
+        eval(text)
+    } else {
+        // Exibe um alerta se a div não for encontrada
+        alert('Fatal error: The editor has an internal problem.');
+    }
+}
+
+</script>
 </body>
+
 </html>

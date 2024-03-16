@@ -1,0 +1,21 @@
+{
+
+
+  "name": "MythCoder",
+
+
+  "main": "index.html",
+
+
+  "dependencies": {
+
+
+    "monaco-editor": "^0.47.0"
+
+
+  }
+
+
+}
+
+

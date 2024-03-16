@@ -1,58 +1,80 @@
-.nav {
-    background-color: black;
-    color: white;
-    width: 100%;
-    height: 35px;
+* {
+    box-sizing: border-box;
 }
-
 body {
-    background-color: black;
+    background: #333;
 }
-
-.nav a {
-    color: #05ff69;
+.centered {
+    width: 550px;
+    height: 110px;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
-
-.nav a:hover{
-    color: green;
-    text-decoration: underline;
-}
-
-.ide {
+.group {
     width: 100%;
-    height: 600px;
-    color: #111111;
-
+    height: 110px;
+    overflow: hidden;
+    position: relative;
 }
-
-.codearea {
-    background-color: #111111;
-    color: rgb(0, 255, 166);
-    border: 0px;
-    height: 850px;
+label {
+    position: absolute;
+    top: 36.6666666667px;
+    color: rgba(255, 255, 255, 0.5);
+    font: 400 36.6666666667px Roboto;
+    cursor: text;
+    transition: 0.25s ease;
 }
-
-.codearea:hover {
-    background-color: #111111;
-    color: white;
-    border: 0px;
-}
-
-
-
-.footer {
+input {
+    display: block;
     width: 100%;
-    height: 35px;
-    color: white;
-    background-color: black;
-    text-align: center;
+    padding-top: 36.6666666667px;
+    border: none;
+    border-radius: 0;
+    color: #fff;
+    background: #333;
+    font-size: 36.6666666667px;
+    transition: 0.3s ease;
 }
-
-.footer a {
-    color: #05ff69;
+input:valid ~ label {
+    top: 0;
+    font: 700 22px Roboto;
+    color: rgba(255, 255, 255, 0.5);
 }
-
-.footer a:hover {
-    color: green;
-    text-decoration: underline;
+input:focus {
+    outline: 0;
+}
+input:focus ~ label {
+    top: 0;
+    font: 700 22px Roboto;
+    color: #00ff85;
+}
+input:focus ~ .bar:before {
+    transform: translateX(0);
+}
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px #333 inset;
+    -webkit-text-fill-color: #fff !important;
+}
+.bar {
+    background: rgba(255, 255, 255, 0.5);
+    content: "";
+    width: 550px;
+    height: 3.6666666667px;
+    transition: 0.3s ease;
+    position: relative;
+}
+.bar:before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 150%;
+    background: #00ff85;
+    transform: translateX(-100%);
+}
+::selection {
+    background: #00ff85;
 }
