@@ -1,3 +1,0 @@
-function cloudsave() {
-    localStorage.setItem
-}
