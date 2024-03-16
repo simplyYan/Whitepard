@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>File Reader</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #333;
+        color: #fff;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+    }
+    #drop-area {
+        border: 2px dashed #ccc;
+        padding: 20px;
+        margin: 20px auto;
+        width: 80%;
+        max-width: 400px;
+        cursor: pointer;
+    }
+    #drop-area:hover {
+        background-color: #444;
+    }
+</style>
+</head>
+<body>
+    <div id="drop-area" ondrop="dropHandler(event);" ondragover="dragOverHandler(event);">
+        <div>Drag & Drop files here or</div>
+        <input type="file" id="file-input" onchange="fileInputChangeHandler(event);">
+        <p>Or click to select files</p>
+    </div>
+    <script>
+        function dragOverHandler(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            event.dataTransfer.dropEffect = 'copy';
+        }
+
+        function dropHandler(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            const files = event.dataTransfer.files;
+            readFile(files[0]);
+        }
+
+        function fileInputChangeHandler(event) {
+            const files = event.target.files;
+            readFile(files[0]);
+        }
+
+        function readFile(file) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const content = event.target.result;
+                copyToClipboard(content);
+            };
+            reader.readAsText(file);
+        }
+
+        function copyToClipboard(content) {
+            const textarea = document.createElement('textarea');
+            textarea.value = content;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            alert('Content copied to clipboard!');
+        }
+    </script>
+</body>
+</html>
